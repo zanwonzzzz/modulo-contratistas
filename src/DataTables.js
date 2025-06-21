@@ -22,6 +22,24 @@ const columns = [
         selector:row => row.apellido_materno
     }
 ]
+     const busqueda = (e) =>
+     { //falta que cuando el input este vacio pues vuelva a como estaba antes
+        const filtradota = data.filter(d => {
+          if(e.target.value !== "")
+            {
+              const contratista = d.Contratista.toLowerCase().includes(e.target.value)
+              const ap = d.apellido_paterno.toLowerCase().includes(e.target.value)
+              const am = d.apellido_materno.toLowerCase().includes(e.target.value)
+
+              return contratista || ap || am
+              
+            }
+         
+        }
+        )
+        setData(filtradota)
+        
+     }
 
     //useeffect es para cargar algo despues de que el componente se renderizo
     useEffect (() => {
@@ -41,11 +59,13 @@ const columns = [
     },[]);
 
   return (
-    <DataTable
-    columns={columns}
-    data={data}>
+    <><input onChange={busqueda}/>
+        <DataTable
+          columns={columns}
+          data={data}
+          pagination>
 
-    </DataTable>
+      </DataTable></>
   )
 }
 
